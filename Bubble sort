@@ -1,0 +1,47 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+int arr[50];
+int data,size;
+void bubble_sort();
+
+
+int main() {
+    bubble_sort();
+
+    return 0;
+}
+
+void bubble_sort(){
+    printf("Enter the size of the array: ");
+    scanf("%d", &size);
+    printf("Enter the array elements:\n");
+    for(int i = 0; i < size; i++){
+        scanf("%d", &arr[i]);
+    }
+    
+
+    for(int i = 0; i < size - 1; i++) {
+        for(int j = 0; j < size - i - 1; j++) {
+            if(arr[j] > arr[j+1]) {
+               
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+
+    printf("Sorted array in ascending order:\n");
+    for(int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+}
+
+//
+
+
+Enter the size of the array: 5
+Enter the array elements:
+6 7 3 4 5
+Sorted array in ascending order:
+3 4 5 6 7 

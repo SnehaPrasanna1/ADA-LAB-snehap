@@ -1,0 +1,80 @@
+#include <stdio.h>
+
+// Structure to represent an item
+struct Item {
+    int value;
+    int weight;
+};
+
+// Function to swap two items
+void swap(struct Item* a, struct Item* b) {
+    struct Item temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Function to sort items based on value-to-weight ratio
+void sortItems(struct Item items[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            double r1 = (double)items[j].value / items[j].weight;
+            double r2 = (double)items[j + 1].value / items[j + 1].weight;
+            if (r1 < r2) {
+                swap(&items[j], &items[j + 1]);
+            }
+        }
+    }
+}
+
+// Function to solve the fractional knapsack problem
+double knapsack(int W, struct Item items[], int n) {
+    sortItems(items, n);
+
+    int currentWeight = 0;
+    double finalValue = 0.0;
+
+    for (int i = 0; i < n; i++) {
+        if (currentWeight + items[i].weight <= W) {
+            currentWeight += items[i].weight;
+            finalValue += items[i].value;
+        } else {
+            int remain = W - currentWeight;
+            finalValue += items[i].value * ((double)remain / items[i].weight);
+            break;
+        }
+    }
+
+    return finalValue;
+}
+
+int main() {
+    int n, W;
+
+    // Take user input for number of items
+    printf("Enter the number of items: ");
+    scanf("%d", &n);
+
+    struct Item items[n];
+
+    // Take user input for weights and values of items
+    for (int i = 0; i < n; i++) {
+        printf("Enter value and weight for item %d: ", i + 1);
+        scanf("%d %d", &items[i].value, &items[i].weight);
+    }
+
+    // Take user input for maximum weight capacity of the knapsack
+    printf("Enter the maximum weight capacity of the knapsack: ");
+    scanf("%d", &W);
+
+    printf("Maximum value in Knapsack = %.2lf\n", knapsack(W, items, n));
+    
+    return 0;
+}
+
+output
+Enter the number of items: 3
+Enter value and weight for item 1: 60 10
+Enter value and weight for item 2: 100 20
+Enter value and weight for item 3: 120 30
+Enter the maximum weight capacity of the knapsack: 50
+Maximum value in Knapsack = 240.00
